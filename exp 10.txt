@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+void insert(int data) {
+    struct Node *newNode = (struct Node*) malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = head;
+    head = newNode;
+}
+
+void delete(int key) {
+    struct Node *current = head;
+    struct Node *prev = NULL;
+    while (current != NULL && current->data != key) {
+        prev = current;
+        current = current->next;
+    }
+    if (current == NULL) return;
+    if (prev == NULL) head = current->next;
+    else prev->next = current->next;
+    free(current);
+}
+
+void display() {
+    struct Node *ptr = head;
+    if (ptr == NULL) {
+        printf("Linked list is empty.\n");
+        return;
+    }
+    printf("Linked list elements: ");
+    while (ptr != NULL) {
+        printf("%d ", ptr->data);
+        ptr = ptr->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    insert(10);
+    insert(20);
+    insert(30);
+    display();
+    delete(20);
+    display();
+    delete(50);
+    display();
+    return 0;
+}
