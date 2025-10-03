@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+#define MAX_VERTICES 50
+
+int visited[MAX_VERTICES] = {0};
+
+void dfs(int graph[MAX_VERTICES][MAX_VERTICES], int start_vertex, int num_vertices) {
+    printf("%d ", start_vertex);
+    visited[start_vertex] = 1;
+    for (int i = 0; i < num_vertices; i++) {
+        if (graph[start_vertex][i] == 1 && !visited[i]) {
+            dfs(graph, i, num_vertices);
+        }
+    }
+}
+
+int main() {
+    int num_vertices = 5;
+    int graph[MAX_VERTICES][MAX_VERTICES] = {
+        {0, 1, 1, 0, 0},
+        {1, 0, 0, 1, 1},
+        {1, 0, 0, 0, 1},
+        {0, 1, 0, 0, 0},
+        {0, 1, 1, 0, 0}
+    };
+    printf("DFS traversal starting from vertex 0: ");
+    dfs(graph, 0, num_vertices);
+    printf("\n");
+    return 0;
+}

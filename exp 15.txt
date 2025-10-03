@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 10
+
+int hash_table[SIZE];
+
+void init_hash_table() {
+    for (int i = 0; i < SIZE; i++) {
+        hash_table[i] = -1;
+    }
+}
+
+void insert_linear_probing(int key) {
+    int index = key % SIZE;
+    int i = 0;
+    while (i < SIZE) {
+        int new_index = (index + i) % SIZE;
+        if (hash_table[new_index] == -1) {
+            hash_table[new_index] = key;
+            printf("Inserted %d at index %d\n", key, new_index);
+            return;
+        }
+        i++;
+    }
+    printf("Hash table is full. Could not insert %d\n", key);
+}
+
+void display_hash_table() {
+    printf("Hash Table:\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("Index %d: %d\n", i, hash_table[i]);
+    }
+}
+
+int main() {
+    init_hash_table();
+    insert_linear_probing(15); // index 5
+    insert_linear_probing(25); // index 5 -> 6
+    insert_linear_probing(35); // index 5 -> 7
+    insert_linear_probing(5);  // index 5 -> 8
+    display_hash_table();
+    return 0;
+}
